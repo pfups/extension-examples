@@ -30,7 +30,15 @@ module.exports = {
     'sort-keys-fix',
     'testing-library',
   ],
-  rules: {},
+  rules: {
+    'no-console': [
+      'error',
+      {
+        allow: ['info', 'warn', 'error'],
+      },
+    ],
+    '@typescript-eslint/no-empty-function': 'off',
+  },
   settings: {
     react: {
       version: 'detect',

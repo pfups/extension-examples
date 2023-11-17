@@ -24,11 +24,12 @@
 
  */
 
- module.exports = {
-    automock: false,
-    moduleDirectories: ['./node_modules'],
-    moduleFileExtensions: ['js', 'jsx', 'json'],
-    restoreMocks: true,
-    testPathIgnorePatterns: [],
-    globals: {},
-  }
+module.exports = {
+  automock: false,
+  moduleDirectories: ['./node_modules'],
+  transformIgnorePatterns: [],
+  moduleFileExtensions: ['js', 'jsx', 'json'],
+  restoreMocks: true,
+  testPathIgnorePatterns: [],
+  globals: {},
+}

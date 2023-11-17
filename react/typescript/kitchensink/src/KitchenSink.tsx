@@ -24,7 +24,7 @@
 
  */
 
-import React, { useEffect, useState, useContext, Suspense } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { intersects } from 'semver'
 import {
@@ -121,6 +121,7 @@ export const KitchenSink: React.FC<KitchenSinkProps> = ({
       )
     }
     initialize()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const updateConfigurationData = async (
@@ -132,7 +133,7 @@ export const KitchenSink: React.FC<KitchenSinkProps> = ({
         await extensionSDK.saveContextData(configurationData)
         return true
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
     return false
@@ -141,7 +142,11 @@ export const KitchenSink: React.FC<KitchenSinkProps> = ({
   return (
     <>
       {configurationData && (
-        <ComponentsProvider>
+        <ComponentsProvider
+          themeCustomizations={{
+            colors: { key: '#1A73E8' },
+          }}
+        >
           <Page>
             <Layout hasAside>
               <Aside>
@@ -152,65 +157,63 @@ export const KitchenSink: React.FC<KitchenSinkProps> = ({
                 />
               </Aside>
               <Section>
-                <Suspense fallback={<></>}>
-                  <Switch>
-                    {configurationData.showApiFunctions && (
-                      <Route path={ROUTES.API_ROUTE}>
-                        <ApiFunctions />
-                      </Route>
-                    )}
-                    {configurationData.showCoreSdkFunctions && (
-                      <Route
-                        path={[
-                          ROUTES.CORESDK_ROUTE,
-                          `${ROUTES.CORESDK_ROUTE}?test=abcd`,
-                        ]}
-                      >
-                        <CoreSDKFunctions />
-                      </Route>
-                    )}
-                    {configurationData.showEmbedDashboard && (
-                      <Route path={ROUTES.EMBED_DASHBOARD}>
-                        <EmbedDashboard id={configurationData.dashboardId} />
-                      </Route>
-                    )}
-                    {configurationData.showEmbedExplore && (
-                      <Route path={ROUTES.EMBED_EXPLORE}>
-                        <EmbedExplore id={configurationData.exploreId} />
-                      </Route>
-                    )}
-                    {configurationData.showEmbedLook && (
-                      <Route path={ROUTES.EMBED_LOOK}>
-                        <EmbedLook id={configurationData.lookId} />
-                      </Route>
-                    )}
-                    {configurationData.showExternalApiFunctions && (
-                      <Route path={ROUTES.EXTERNAL_API_ROUTE}>
-                        <ExternalApiFunctions />
-                      </Route>
-                    )}
-                    {configurationData.showMiscFunctions && (
-                      <Route path={ROUTES.MISC_ROUTE}>
-                        <MiscFunctions />
-                      </Route>
-                    )}
-                    <Route path={ROUTES.CONFIG_ROUTE}>
-                      <Configure
-                        configurationData={configurationData}
-                        updateConfigurationData={updateConfigurationData}
-                        canPersistContextData={canPersistContextData}
-                      />
+                <Switch>
+                  {configurationData.showApiFunctions && (
+                    <Route path={ROUTES.API_ROUTE}>
+                      <ApiFunctions />
                     </Route>
-                    {configurationData.showMiscFunctions && (
-                      <Route path={ROUTES.MISC_ROUTE}>
-                        <MiscFunctions />
-                      </Route>
-                    )}
-                    <Route>
-                      <Home />
+                  )}
+                  {configurationData.showCoreSdkFunctions && (
+                    <Route
+                      path={[
+                        ROUTES.CORESDK_ROUTE,
+                        `${ROUTES.CORESDK_ROUTE}?test=abcd`,
+                      ]}
+                    >
+                      <CoreSDKFunctions />
                     </Route>
-                  </Switch>
-                </Suspense>
+                  )}
+                  {configurationData.showEmbedDashboard && (
+                    <Route path={ROUTES.EMBED_DASHBOARD}>
+                      <EmbedDashboard id={configurationData.dashboardId} />
+                    </Route>
+                  )}
+                  {configurationData.showEmbedExplore && (
+                    <Route path={ROUTES.EMBED_EXPLORE}>
+                      <EmbedExplore id={configurationData.exploreId} />
+                    </Route>
+                  )}
+                  {configurationData.showEmbedLook && (
+                    <Route path={ROUTES.EMBED_LOOK}>
+                      <EmbedLook id={configurationData.lookId} />
+                    </Route>
+                  )}
+                  {configurationData.showExternalApiFunctions && (
+                    <Route path={ROUTES.EXTERNAL_API_ROUTE}>
+                      <ExternalApiFunctions />
+                    </Route>
+                  )}
+                  {configurationData.showMiscFunctions && (
+                    <Route path={ROUTES.MISC_ROUTE}>
+                      <MiscFunctions />
+                    </Route>
+                  )}
+                  <Route path={ROUTES.CONFIG_ROUTE}>
+                    <Configure
+                      configurationData={configurationData}
+                      updateConfigurationData={updateConfigurationData}
+                      canPersistContextData={canPersistContextData}
+                    />
+                  </Route>
+                  {configurationData.showMiscFunctions && (
+                    <Route path={ROUTES.MISC_ROUTE}>
+                      <MiscFunctions />
+                    </Route>
+                  )}
+                  <Route>
+                    <Home />
+                  </Route>
+                </Switch>
               </Section>
             </Layout>
           </Page>
@@ -219,3 +222,5 @@ export const KitchenSink: React.FC<KitchenSinkProps> = ({
     </>
   )
 }
+
+export default KitchenSink

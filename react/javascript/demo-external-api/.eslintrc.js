@@ -32,6 +32,13 @@ module.exports = {
   ],
   rules: {
     camelcase: ['error', { ignoreDestructuring: true, properties: 'never' }],
+    'no-console': [
+      'error',
+      {
+        allow: ['info', 'warn', 'error'],
+      },
+    ],
+    '@typescript-eslint/no-empty-function': 'off',
   },
   settings: {
     react: {

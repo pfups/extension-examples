@@ -27,6 +27,7 @@
 module.exports = {
   automock: false,
   moduleDirectories: ['./node_modules'],
+  transformIgnorePatterns: [],
   moduleFileExtensions: ['js', 'jsx', 'json'],
   restoreMocks: true,
   testPathIgnorePatterns: [],
